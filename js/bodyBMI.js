@@ -1,13 +1,9 @@
 $(function() {
 
-	requestTable();
-
-	$("#btnAdd").click(function() {
+	$( '#btnAdd' ).click(function() {
 		var name = $("#name").val();
 		var weight = $("#weight").val();
 		var height = $("#height").val();
-
-		// alert(name + " " + weight + " " + height);
 
 		// Validation Check
 		if(!validateName(name)) {
@@ -20,12 +16,8 @@ $(function() {
 			alert("Please enter height in meter");
 		} else {
 			insertRequest(name, weight, height);
-			requestTable();
+			requestTable(1);
 		}
-	});
-
-	$('#btnDelete').click(function() {
-		alert("I am still figuring out how to delete..");
 	});
 
 });
@@ -58,8 +50,7 @@ var insertRequest = function(name, weight, height) {
 	});
 }
 
-function requestTable() {
-	// alert("coming to requestTable()");
+function requestTable(page_num) {
 	// Build XMLHttpRequest Object
 	if (window.XMLHttpRequest) {
 		// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -68,12 +59,26 @@ function requestTable() {
 		// code for IE6, IE5
 		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
+
+	xmlhttp.open("POST", "bodyBMI_table.php", true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			$("#showTable").html(xmlhttp.responseText);
 		}
 	};
 	// Send requests to PHP
-	xmlhttp.open("GET", "bodyBMI_table.php", true);
-	xmlhttp.send();
+	xmlhttp.send('page='+page_num);
+}
+
+// After bodyBMI_table.php is loaded, hook the event
+function hookEvent() {
+	$( '#btnDelete' ).click(function() {
+		alert("still working on delete...");
+	});
+
+	$( '.pagination li' ).click(function(){
+    	var page_num = $(this).text();
+    	requestTable(page_num);
+	})
 }

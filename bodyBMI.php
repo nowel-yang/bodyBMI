@@ -9,11 +9,12 @@
 		src="https://code.jquery.com/jquery-1.12.2.min.js"   
 		integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="   
 		crossorigin="anonymous"></script>
-	<script src="js/bodyBMI.js"></script>  
+	
 	<!-- For Bootstrap -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="js/bodyBMI.js"></script> 
 </head>
 
 <body>
@@ -58,8 +59,15 @@
 		</div>
 	</div>
 	<button class="btn btn-info" id="btnAdd">Add me</button>
-	
+
 	<div id="showTable"></div>
+
+	<script>
+		// first time request the table
+		var page_num = 1;
+		requestTable(page_num);
+	</script>
 </div>
+ 
 </body>
 </html>

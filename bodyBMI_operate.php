@@ -1,6 +1,5 @@
 <?php
 	
-
 if( isset($_POST['name']) && isset($_POST['height']) && isset($_POST['weight']) ) {
 	$name = $_POST['name'];
 	$weight = $_POST['weight'];
@@ -39,7 +38,7 @@ if( isset($_POST['name']) && isset($_POST['height']) && isset($_POST['weight']) 
 
 if( isset($_POST['delete']) ) {
 
-	mysqli_select_db( $link, $dbname );
+	include_once ('../../db-info/bmi/db_connect.php');
 	//DELETE FROM `cyang21_bmi`.`bmi` WHERE `bmi`.`id` = 30;
 
 	$sql = "DELETE FROM `bmi` WHERE `bmi`.`id` = " . $_POST['delete'];
@@ -48,15 +47,10 @@ if( isset($_POST['delete']) ) {
 }
 
 function send_to_DB($sql) {
-	require_once ('db_info.php');
-	$link = mysqli_connect( $host, $user, $password, $dbname );
-	if (!$link) {
-		die( 'Could not connect: ' . mysqli_connect_error() );
-	}
-
-	mysqli_select_db( $link, $dbname );
+	include_once ('../../db-info/bmi/db_connect.php');
 
 	$result = mysqli_query( $link, $sql );
+
 	if (!$result) {
 		$message  = 'Invalid query: ' . mysqli_error($link) . "<br>";
 		$message .= 'Whole query: ' . $sql;
@@ -65,7 +59,5 @@ function send_to_DB($sql) {
 
 	mysqli_free_result($result);
 	mysqli_close($link);
-
-	echo $sql;
 }
 ?>
